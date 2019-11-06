@@ -1,0 +1,74 @@
+/**
+Objetivo 
+	Calcular a Distancia
+Descrição
+	Calcular uma distancia de uma area mapeada com base entre 2 ou mais pontos.**/
+
+#include <stdio.h>
+#include <stdlib.h>;
+#include <math.h>
+#define DISTMAX 20 /* Foi utilizado uma definição de constante para que seja fácil a mudança, caso necessário for.*/
+
+float CalcularDistancia( float nLat1, float nLon1, float nLat2, float nLon2 )
+{
+ 	
+ 	float nD,nDLat,nDLon;
+
+	nDLat = nLat1-nLat2;
+	nDLon = nLon1-nLon2;
+	nDLat = pow(nDLat,2);
+	nDLon = pow(nDLon,2);//pow equivale a potenciação
+	
+	nD= sqrt(nDLat+nDLon);//funcao sqrt equivale a raiz quadrada
+
+    return nD*111111.11; // Retorna a distancia em metros.
+}
+/*Foi utilizado a formula de pitágoras, porém só é valido em pequenas distancias,
+no caso de grandes distancias, deverá ser usado a fórmula de Harvesine.
+*/
+void alerta(float DISTANCIA){
+	
+	if(DISTANCIA < DISTMAX){
+		printf("\n\nPet está em distancia segura.\n\n");
+	}else {
+		if(DISTANCIA > DISTMAX){
+			printf("\n\nALERTA, pet está em distancia acima do permitido\n\n"); 
+		}
+	}
+}
+int insere_dados(int loop){
+	float distancia;
+	/*
+	coordenadas que abrangem toda a praça
+	-15.833468 > x > -15.833019
+	-48.057221 > y > -48.055902
+	*/
+	float tutor,xTutor,yTutor,xPet,yPet,pet;
+	system("cls");
+	printf("Para sair, infome a coordenada como 1.\nInforme as coordenadas do tutor:\n");
+	scanf("%f", &xTutor);
+	if(xTutor == 1.0){
+		return 1;
+	}
+	scanf("%f", &yTutor);
+	fflush(stdin);
+	printf("Informe as coordenadas do pet:\n");
+	scanf("%f", &xPet);
+	scanf("%f", &yPet);
+	distancia = CalcularDistancia(xTutor,yTutor,xPet,yPet);
+	alerta(distancia);
+
+	return loop;
+}
+
+int main(){
+	int loop=-1;
+  do{
+    loop=insere_dados(loop);
+  }while(loop != 1);
+
+  printf("Programa finalizado!\n");
+
+	return 0;
+}
+/** Made by Jonas Sousa dos Santos **/
